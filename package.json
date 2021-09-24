@@ -1,0 +1,22 @@
+{
+  "name": "lenskart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha './test/lenskart.test.js' --timeout 100000000"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.0"
+  },
+  "dependencies": {
+    "jsdom": "^17.0.0",
+    "puppeteer-autoscroll-down": "^0.1.7"
+  }
+}
