@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
-var browser;
+
 async function openBrowser(url){
-    browser = await puppeteer.launch({
+  const browser = await puppeteer.launch({
         headless: false,
         defaultViewport:null,
         args: ['--start-maximized',
@@ -18,16 +18,7 @@ async function closeBrowser(){
     await browser.close();
 }
 
-async function isHelpVisible(page, xPathSelector){
-    try {
-      await page.waitForXPath(xPathSelector, { visible: true, timeout: 1000 });
-      return true;
-    } catch {
-      return false;
-    }
-  }
 module.exports = {
     openBrowser,
-    closeBrowser,
-    isHelpVisible
+    closeBrowser
 }

@@ -16,7 +16,7 @@ async function clickOnLenskartPriceFilterOnResultPage(page){
     const element = await page.$x(obj_locator.priceFilterCheckBox)
     await element[0].click();
 }
-async function newTab(page){
+async function newProductTab(page){
     await page.setDefaultNavigationTimeout(0);
  await page.waitForXPath(obj_locator.newProductTab);
  const element = await page.$x(obj_locator.newProductTab)
@@ -56,11 +56,12 @@ async function getProductPriceFromResultPage(page){
     let productPrice = await page.evaluate(e1 => e1.textContent,element[0])
     return productPrice.substring(1);
 }
+
 module.exports = {
 clickOnSquareFrameShapeFilterOnResultPage,
 clickOnHalfRimFrameTypeOnResultPage,
 clickOnLenskartPriceFilterOnResultPage,
-newTab,
+newProductTab,
 getNumberOfResultsBeforeFilterOnResultPage,
 getNumberOfResultsAfterFilterOnResultPage,
 verifyResultAfterFilter,

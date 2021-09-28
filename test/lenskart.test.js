@@ -9,19 +9,18 @@ const testdata = require('../common_action/testdata.json');
 const productpage = require('../pages/productpage.js');
 const resultpage = require('../pages/resultpage.js');
 
-describe("User Login",()=>{
-    it("Login with valid credential",async()=>{
+describe("Lenskart",()=>{
+    it("Testing scanarios",async()=>{
         const page = await common_action.openBrowser(testdata.url);
+
 
 //Click On No Thanks Popup
          await landingpage.clickOnNoThanks(page);
         await page.waitForTimeout(2000)
 
-//If Help is Visible
-        await homepage.ifHelpIsVisible(page);
-       
 //Sign In
         await landingpage.clickOnSignInSignUp(page);
+        await page.waitForTimeout(2000);
         await loginpage.clickOnSignInButton(page);
         await loginpage.typeEmailAddress(page,credential.email)
         await loginpage.clickOnProceedButton(page);
@@ -73,16 +72,18 @@ describe("User Login",()=>{
          await page.waitForTimeout(5000)
      
 //Open New Tab
-        const newPage = await resultpage.newTab(page);   
+        const newPage = await resultpage.newProductTab(page);   
         await newPage.waitForTimeout(3000)
-
-//If Help is Visible
-        await homepage.ifHelpIsVisible(newPage)
 
 //Verify Product Price
         const productPriceFromProductPage = await productpage.getProductPriceFromProductPage(newPage);
         await productpage.verifyProductPriceIsSameAsResultPage(productPriceFromResultPage,productPriceFromProductPage)
         await newPage.waitForTimeout(3000)
+
+//Iframe Video
+        let status=await productpage.clickOnIframeVideo(newPage)
+       await productpage.verifyIfIframeVideoIsPlayed(status,testdata.videoStatus)
+        
 //BuyNow
         await productpage.clickOnBuyNowButtonOnProductPage(newPage);
         await newPage.waitForTimeout(2000)
@@ -103,8 +104,10 @@ describe("User Login",()=>{
         await homepage.clickOnUsernameDropDown(page);   
         await page.waitForTimeout(5000);
         await homepage.clickOnUsernameDropDownLogout(page);
+
+//Verify Signout successfully
         await landingpage.isSignInSignUpButton(page);
-         await page.waitForTimeout(5000);
+        await page.waitForTimeout(5000);
     
 //Close Browser
          await common_action.closeBrowser();

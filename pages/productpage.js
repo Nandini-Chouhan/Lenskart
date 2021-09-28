@@ -46,7 +46,22 @@ async function typeCardHolderNameOnProductPage(page,cardHolderName){
     const element = await page.$x(obj_locator.cardHolderNameInput)
     await element[0].type(cardHolderName,{delay : 100});
 }
-
+async function clickOnIframeVideo(page){
+    const [elementHandle] = await page.$x(obj_locator.iframe)
+    const frame = await elementHandle.contentFrame();
+    await frame.waitForXPath(obj_locator.videoIframe)
+    let e = await frame.$x(obj_locator.videoIframe)
+    await e[0].click();
+    await frame.waitForXPath(obj_locator.videoPauseButton)
+     e = await frame.$x(obj_locator.videoPauseButton)
+    await e[0].click();
+    let status = await frame.$eval(obj_locator.iframeButtonStatus,
+                element=> element.getAttribute('aria-label'))
+    return status;
+}
+async function verifyIfIframeVideoIsPlayed(status,check){
+    assert.equal(status,check,"Equal");
+}
 module.exports = {
     getProductPriceFromProductPage,
     verifyProductPriceIsSameAsResultPage,
@@ -56,5 +71,7 @@ module.exports = {
     typeCardNumberOnProductPage,
     typeDateOnProductPage,
     typeCVVOnProductPage,
-    typeCardHolderNameOnProductPage
+    typeCardHolderNameOnProductPage,
+    clickOnIframeVideo,
+    verifyIfIframeVideoIsPlayed
 }
