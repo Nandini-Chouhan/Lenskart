@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
-
+let browser;
 async function openBrowser(url){
-  const browser = await puppeteer.launch({
+   browser = await puppeteer.launch({
         headless: false,
         defaultViewport:null,
         args: ['--start-maximized',
